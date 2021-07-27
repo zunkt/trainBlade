@@ -21,3 +21,11 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('me', [AuthController::class, 'me']);
     Route::post('register', [AuthController::class, 'register']);
 });
+
+Route::group(['middleware' => 'auth:user'], function () {
+    Route::get('all', [UserController::class, 'index']);
+    Route::get('show/{id}', [UserController::class, 'show']);
+    Route::post('store', [UserController::class, 'store']);
+    Route::post('update/{id}', [UserController::class, 'update']);
+    Route::post('delete/{id}', [UserController::class, 'destroy']);
+});

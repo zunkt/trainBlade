@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Repositories\UserRepository;
 use App\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
@@ -82,5 +86,38 @@ class AuthController extends Controller
             return $this->response(422, [], __('Please Login!'));
         }
 
+    }
+
+    /**
+     * {{DOMAIN}}/user/auth/register
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email:rfc,dns',
+            'name' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->response(422, [], '', $validator->errors());
+        }
+
+        $input = $request->only(['email', 'name']);
+
+        $isRegistered = $this->userRepo->all(['email' => $input['email']]);
+
+        if (count($isRegistered)) {
+            return $this->response(422, [], __('Email already exits'));
+        }
+
+        $password = $request->request->get('password');
+        $input['password'] = bcrypt($password);
+
+        $user = $this->userRepo->create($input);
+
+        return $this->response(200, ['user' => new UserResource($this->userRepo->find($user->id))], __('text.register_successfully'));
     }
 }
