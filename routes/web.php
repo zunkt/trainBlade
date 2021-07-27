@@ -16,9 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function (Request $request) {
-    $pages = intval($request->size);
-    $users = \App\User::all();
-    return view('welcome', ['users' => $users]);
+    return view('auth.login');
 });
 
 Route::get('/all', [UserController::class, 'index']);
@@ -26,3 +24,5 @@ Route::get('/all', [UserController::class, 'index']);
 Route::get('/user', [UserController::class, 'index'])->name('articles.index');
 Route::post('/user', [UserController::class, 'store']);
 Route::get('/user/create', [UserController::class, 'create']);
+Route::get('/user/show', [UserController::class, 'show']);
+Route::post('/user/show', [UserController::class, 'update']);

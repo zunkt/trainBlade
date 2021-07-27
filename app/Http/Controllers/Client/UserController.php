@@ -21,10 +21,20 @@ class UserController extends Controller
     {
         $pages = intval($request->size);
         $users = $this->userRepo->userSearch($request)->paginate($pages);
-        return view('welcome', ['users' => $users, 'pages' => $pages]);
+        return view('user.index', ['users' => $users, 'pages' => $pages]);
     }
 
-    public function create(Request $request)
+    public function create()
+    {
+        return view('user.create');
+    }
+
+    public function show()
+    {
+        return view('user.show');
+    }
+
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email:rfc,dns',
