@@ -34,7 +34,7 @@
                             <input type="email" name="email" class="form-control" placeholder="email">
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="back" value="Back" class="btn bg-white text-dark login_btn">
+                            <input type="button" id="btn-back" name="back" value="Back" class="btn bg-white text-dark login_btn">
                             <input type="submit" name="submit" value="Create" class="btn bg-white text-dark login_btn">
                         </div>
                     </form>
@@ -43,6 +43,18 @@
         </div>
     </div>
 @endsection
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready()
+    {
+        $(document).on('click','#btn-back',function() {
+            window.location.href = '{{ route('user.index') }}'
+        })
+    }
+</script>
+
 
 <style>
     /* Made with love by Mutiullah Samim*/
