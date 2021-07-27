@@ -8,22 +8,29 @@
                     <h3>Show/Update User</h3>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form
+                        action="{{ route('user.update', $user->id) }}"
+                        method="POST"
+                        role="form"
+                    >
+                        @csrf
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" name="username" class="form-control" placeholder="username">
+                            <input type="text" name="name" value="{{ $user->name }}" class="form-control"
+                                   placeholder="username">
 
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="email" name="email" class="form-control" placeholder="email">
+                            <input type="email" name="email" value="{{ $user->email }}" class="form-control"
+                                   placeholder="email">
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="back" value="Back" class="btn bg-white text-dark login_btn">
+                            <input type="button" id="btn-back" name="back" value="Back" class="btn bg-white text-dark login_btn">
                             <input type="submit" name="submit" value="Submit" class="btn bg-white text-dark login_btn">
                         </div>
                     </form>
@@ -32,6 +39,17 @@
         </div>
     </div>
 @endsection
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready()
+    {
+        $(document).on('click','#btn-back',function() {
+            window.location.href = '{{ route('user.index') }}'
+        })
+    }
+</script>
 
 <style>
     /* Made with love by Mutiullah Samim*/

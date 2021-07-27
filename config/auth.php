@@ -47,10 +47,14 @@ return [
             'hash' => false,
         ],
 
+//        'user' => [
+//            'driver' => 'jwt',
+//            'provider' => 'users',
+//            'hash' => true,
+//        ],
         'user' => [
-            'driver' => 'jwt',
+            'driver' => 'session',
             'provider' => 'users',
-            'hash' => true,
         ],
     ],
 

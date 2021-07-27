@@ -42,14 +42,25 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Exception $exception
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function render($request, Exception $exception)
     {
+        $classExp = get_class($exception);
+
+        if($classExp == 'Illuminate\Auth\AuthenticationException'){
+            return response()->json([
+                'code' => 401,
+                'data' => (object)[],
+                'message' => '1Please log in to do this',//Please login to perform this action
+                'errors' => ''
+            ], 401);
+        }
+
         return parent::render($request, $exception);
     }
 }

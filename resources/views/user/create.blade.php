@@ -8,12 +8,17 @@
                     <h3>Create User</h3>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form
+                        action="{{ route('user.create') }}"
+                        method="POST"
+                        role="form"
+                    >
+                        @csrf
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" name="username" class="form-control" placeholder="username">
+                            <input type="text" name="name" class="form-control" placeholder="username">
 
                         </div>
                         <div class="input-group form-group">

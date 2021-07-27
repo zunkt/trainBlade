@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
-use App\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -17,6 +18,12 @@ class UserController extends Controller
         $this->userRepo = $userRepo;
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|JsonResponse|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
         $pages = intval($request->size);
@@ -29,11 +36,29 @@ class UserController extends Controller
         return view('user.create');
     }
 
-    public function show()
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return Response
+     */
+    public function show($id)
     {
-        return view('user.show');
+        $user = $this->userRepo->find($id);
+
+        if (empty($user)) {
+            return $this->response(422, [], __('text.this_user_is_invalid'));
+        }
+
+        return view('user.show', ['user' => $user]);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|Response|\Illuminate\View\View
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -58,6 +83,32 @@ class UserController extends Controller
 
         $user = $this->userRepo->create($input);
 
-        return view('user.create', ['user' => $user]);
+        return redirect()->route('user.index');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email:rfc,dns',
+            'name' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->response(422, [], '', $validator->errors());
+        }
+
+        $input = $request->only(['email', 'name']);
+
+        $password = $request->request->get('password');
+        $input['password'] = bcrypt($password);
+
+        $this->userRepo->update($input, $id);
+        return redirect()->route('user.index');
     }
 }
