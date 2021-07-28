@@ -27,7 +27,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $pages = intval($request->size);
+        $size = 4;
+        $pages = intval($size);
         $users = $this->userRepo->userSearch($request)->paginate($pages);
         return view('user.index', ['users' => $users, 'pages' => $pages]);
     }
