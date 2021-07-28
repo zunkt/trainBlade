@@ -87,13 +87,14 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email:rfc,dns',
             'name' => 'required|string|max:255',
+            'password' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
             return $this->response(422, [], '', $validator->errors());
         }
 
-        $input = $request->only(['email', 'name']);
+        $input = $request->only(['email', 'name', 'password']);
 
         $isRegistered = $this->userRepo->all(['email' => $input['email']]);
 

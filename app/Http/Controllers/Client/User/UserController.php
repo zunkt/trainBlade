@@ -65,13 +65,14 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email:rfc,dns',
             'name' => 'required|string|max:255',
+            'password' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         }
 
-        $input = $request->only(['email', 'name']);
+        $input = $request->only(['email', 'name', 'password']);
 
         $isRegistered = $this->userRepo->all(['email' => $input['email']]);
 

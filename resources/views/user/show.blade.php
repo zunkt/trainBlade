@@ -21,9 +21,10 @@
                             <input type="text" name="name" value="{{ $user->name }}"
                                    class="@error('name') is-invalid @enderror form-control"
                                    placeholder="username">
-
                             @error('name')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                             @enderror
                         </div>
                         <div class="input-group form-group">
@@ -34,9 +35,10 @@
                                    id="email"
                                    class="@error('email') is-invalid @enderror form-control"
                                    placeholder="email">
-
                             @error('email')
-                            <div class="mt-2 alert alert-danger">{{ $message }}</div>
+                            <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                         <div class="input-group form-group">

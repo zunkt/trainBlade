@@ -21,7 +21,9 @@
                             <input type="text" name="name" class="@error('name') is-invalid @enderror form-control" placeholder="username">
 
                             @error('name')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                         <div class="input-group form-group">
@@ -31,7 +33,9 @@
                             <input type="password" name="password" class="@error('password') is-invalid @enderror form-control" placeholder="password">
 
                             @error('password')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                         <div class="input-group form-group">
@@ -41,7 +45,9 @@
                             <input type="email" name="email" class="@error('email') is-invalid @enderror form-control" placeholder="email">
 
                             @error('email')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                         <div class="form-group">

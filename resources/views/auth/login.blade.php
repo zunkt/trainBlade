@@ -19,19 +19,27 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
-                                <input type="text" name="email" class="@error('email') is-invalid @enderror form-control" placeholder="email" required>
+                                <input type="text" name="email"
+                                       class="@error('email') is-invalid @enderror form-control" placeholder="email"
+                                       required>
                                 @error('email')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
-                                <input type="password" name="password" class="@error('password') is-invalid @enderror form-control" placeholder="password" required>
+                                <input type="password" name="password"
+                                       class="@error('password') is-invalid @enderror form-control"
+                                       placeholder="password" required>
 
                                 @error('password')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                             <div class="form-group">
