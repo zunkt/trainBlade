@@ -4,9 +4,8 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends  Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
     use Notifiable;
 
@@ -18,7 +17,7 @@ class User extends  Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'is_admin',
     ];
 
     /**
@@ -38,27 +37,14 @@ class User extends  Authenticatable implements JWTSubject
     public static $rules = [
         'password' => 'required|string|max:100',
         'email' => 'required|email:rfc,dns',
+        'is_admin' => 'required|int'
     ];
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
+    public function hasPermission()
     {
-        // TODO: Implement getJWTIdentifier() method.
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        // TODO: Implement getJWTCustomClaims() method.
-        return [];
+        if ($this->is_admin == '0')
+            return false;
+        else
+            return true;
     }
 }

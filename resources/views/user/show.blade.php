@@ -30,7 +30,8 @@
                                    placeholder="email">
                         </div>
                         <div class="form-group">
-                            <input type="button" id="btn-back" name="back" value="Back" class="btn bg-white text-dark login_btn">
+                            <input type="button" id="btn-back" name="back" value="Back"
+                                   class="btn bg-white text-dark login_btn">
                             <input type="submit" name="submit" value="Submit" class="btn bg-white text-dark login_btn">
                         </div>
                     </form>
@@ -45,7 +46,7 @@
 <script type="text/javascript">
     $(document).ready()
     {
-        $(document).on('click','#btn-back',function() {
+        $(document).on('click', '#btn-back', function () {
             window.location.href = '{{ route('user.index') }}'
         })
     }

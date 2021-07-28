@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Client\User;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
+use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -79,9 +80,10 @@ class UserController extends Controller
         }
 
         $password = $request->request->get('password');
+
         $input['password'] = bcrypt($password);
 
-        $user = $this->userRepo->create($input);
+        $this->userRepo->create($input);
 
         return redirect()->route('user.index');
     }
@@ -110,5 +112,25 @@ class UserController extends Controller
 
         $this->userRepo->update($input, $id);
         return redirect()->route('user.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return Response
+     */
+    public function destroy(Request $request)
+    {
+        /** @var User $user */
+        $user = $this->userRepo->find($request->id);
+
+        if (empty($user)) {
+            return $this->response(422, [], __('text.this_user_is_invalid'));
+        }
+
+        $this->userRepo->delete($request->id);
+
+        return $this->response(200, null, 'User deleted successfully', [], null, true);
     }
 }

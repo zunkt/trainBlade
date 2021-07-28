@@ -11,8 +11,8 @@
 |
 */
 
-use App\Http\Controllers\Client\AuthController;
-use App\Http\Controllers\Client\UserController;
+use App\Http\Controllers\Client\User\AuthController;
+use App\Http\Controllers\Client\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,10 +29,17 @@ Route::group(['prefix' => 'auth'], function () {
 
 
 Route::group(['middleware' => 'auth:user'], function () {
-    Route::get('create', [UserController::class, 'create'])->name('user.add');
-    Route::post('create', [UserController::class, 'store'])->name('user.create');
+
+    Route::group(['middleware' => 'admin'], function () {
+        Route::get('show/{id}', [UserController::class, 'show'])->name('user.show');
+        Route::post('show/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::get('create', [UserController::class, 'create'])->name('user.add');
+        Route::post('create', [UserController::class, 'store'])->name('user.create');
+        Route::get('/list', [UserController::class, 'index'])->name('user.index');
+        Route::post('delete', [UserController::class, 'destroy'])->name('user.delete');
+    });
+
     Route::get('/list', [UserController::class, 'index'])->name('user.index');
     Route::get('show/{id}', [UserController::class, 'show'])->name('user.show');
     Route::post('show/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::post('delete/{id}', [UserController::class, 'destroy']);
 });

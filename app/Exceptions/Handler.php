@@ -53,12 +53,7 @@ class Handler extends ExceptionHandler
         $classExp = get_class($exception);
 
         if($classExp == 'Illuminate\Auth\AuthenticationException'){
-            return response()->json([
-                'code' => 401,
-                'data' => (object)[],
-                'message' => '1Please log in to do this',//Please login to perform this action
-                'errors' => ''
-            ], 401);
+            return abort(401);
         }
 
         return parent::render($request, $exception);
