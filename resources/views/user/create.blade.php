@@ -18,20 +18,31 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" name="name" class="form-control" placeholder="username">
+                            <input type="text" name="name" class="@error('name') is-invalid @enderror form-control" placeholder="username">
 
+                            @error('name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" name="password" class="form-control" placeholder="password">
+                            <input type="password" name="password" class="@error('password') is-invalid @enderror form-control" placeholder="password">
+
+                            @error('password')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="email" name="email" class="form-control" placeholder="email">
+                            <input type="email" name="email" class="@error('email') is-invalid @enderror form-control" placeholder="email">
+
+                            @error('email')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <input type="button" id="btn-back" name="back" value="Back" class="btn bg-white text-dark login_btn">

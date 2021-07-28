@@ -31,11 +31,12 @@
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
                             <input type="email" name="email" value="{{ $user->email }}"
+                                   id="email"
                                    class="@error('email') is-invalid @enderror form-control"
                                    placeholder="email">
 
                             @error('email')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <div class="mt-2 alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="input-group form-group">

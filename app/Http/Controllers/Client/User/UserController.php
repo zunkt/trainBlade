@@ -68,7 +68,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->response(422, [], '', $validator->errors());
+            return redirect()->back()->withErrors($validator);
         }
 
         $input = $request->only(['email', 'name']);
@@ -76,7 +76,9 @@ class UserController extends Controller
         $isRegistered = $this->userRepo->all(['email' => $input['email']]);
 
         if (count($isRegistered)) {
-            return $this->response(422, [], __('Email already exits'));
+            return redirect()->back()->withErrors([
+                'isExitEmail' => "Email Exits!"
+            ]);
         }
 
         $password = $request->request->get('password');
