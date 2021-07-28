@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler
      *
      * @param \Illuminate\Http\Request $request
      * @param \Exception $exception
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return void
      *
      * @throws Exception
      */
@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
         $classExp = get_class($exception);
 
         if($classExp == 'Illuminate\Auth\AuthenticationException'){
-            return abort(401);
+            return abort(401, 'Please Login Before Continue!');
         }
 
         return parent::render($request, $exception);

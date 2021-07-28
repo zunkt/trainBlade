@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client\User;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Repositories\UserRepository;
+use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,22 +39,26 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make(request()->all(), [
-            'email' => 'required|email',
-            'password' => [
-                'required',
-            ]
+            'email' => 'required|email:rfc,dns',
+            'password' => 'required',
         ]);
         if ($validator->fails()) {
-            return $this->response(422, [], '', $validator->errors());
+            return redirect()->back()->withErrors($validator);
         }
 
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('list');
+        if (!Auth::attempt($credentials)) {
+            $email = trim(request()->email);
+            $userFailed = User::where('email', $email)->first();
+            if (isset($userFailed)) {
+                return redirect()->back()->withErrors([
+                    'password' => 'Wrong password. Please Check Again!',
+                ]);
+            }
         }
 
-        return redirect()->intended('/');
+        return redirect()->intended('list');
     }
 
     /**
@@ -65,7 +70,9 @@ class AuthController extends Controller
             Auth::logout();
             return redirect()->route('main');
         } catch (Throwable $e) {
-            return $this->response(422, [], __('Please Login!'));
+            return redirect()->back()->withErrors([
+                'login' => 'Please Login!'
+            ]);
         }
     }
 

@@ -102,13 +102,15 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->response(422, [], '', $validator->errors());
+            return redirect()->back()->withErrors($validator);
         }
 
         $input = $request->only(['email', 'name']);
 
-        $password = $request->request->get('password');
-        $input['password'] = bcrypt($password);
+        if ($request->request->get('password')) {
+            $password = $request->request->get('password');
+            $input['password'] = bcrypt($password);
+        }
 
         $this->userRepo->update($input, $id);
         return redirect()->route('user.index');

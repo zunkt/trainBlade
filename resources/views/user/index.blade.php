@@ -58,12 +58,19 @@
                                                 <li><a href="{{ route('user.show', $user->id) }}" class="text-info"
                                                        data-toggle="tooltip" title="" data-original-title="Edit"><i
                                                             class="fas fa-pencil-alt"></i></a></li>
+                                            @elseif (auth()->user()->hasPermission())
+                                                <li><a href="{{ route('user.show', $user->id) }}" class="text-info"
+                                                       data-toggle="tooltip" title="" data-original-title="Edit"><i
+                                                            class="fas fa-pencil-alt"></i></a></li>
                                             @endif
 
                                             @if (auth()->user()->hasPermission())
-                                                <li><a href="#" data-id="{{ $user->id }}" id="delete" class="text-danger" data-toggle="tooltip"
-                                                       title="" data-original-title="Delete"><i
-                                                            class="far fa-trash-alt"></i></a></li>
+                                                @if ($user->id != auth()->user()->id)
+                                                    <li><a href="#" data-id="{{ $user->id }}" id="delete"
+                                                           class="text-danger" data-toggle="tooltip"
+                                                           title="" data-original-title="Delete"><i
+                                                                class="far fa-trash-alt"></i></a></li>
+                                                @endif
                                             @endif
                                         </ul>
                                     </td>
@@ -71,18 +78,18 @@
                             @endforeach
                             </tbody>
                         </table>
-                        <div class="text-center mt-3 mt-sm-3">
-                            <ul class="pagination justify-content-center mb-0">
-                                <li class="page-item disabled"><span class="page-link">Prev</span></li>
-                                <li class="page-item active" aria-current="page"><span class="page-link">1 </span> <span
-                                        class="sr-only">(current)</span></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">...</a></li>
-                                <li class="page-item"><a class="page-link" href="#">25</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
-                        </div>
+                        {{--                        <div class="text-center mt-3 mt-sm-3">--}}
+                        {{--                            <ul class="pagination justify-content-center mb-0">--}}
+                        {{--                                <li class="page-item disabled"><span class="page-link">Prev</span></li>--}}
+                        {{--                                <li class="page-item active" aria-current="page"><span class="page-link">1 </span> <span--}}
+                        {{--                                        class="sr-only">(current)</span></li>--}}
+                        {{--                                <li class="page-item"><a class="page-link" href="#">2</a></li>--}}
+                        {{--                                <li class="page-item"><a class="page-link" href="#">3</a></li>--}}
+                        {{--                                <li class="page-item"><a class="page-link" href="#">...</a></li>--}}
+                        {{--                                <li class="page-item"><a class="page-link" href="#">25</a></li>--}}
+                        {{--                                <li class="page-item"><a class="page-link" href="#">Next</a></li>--}}
+                        {{--                            </ul>--}}
+                        {{--                        </div>--}}
                     </div>
                 </div>
             </div>

@@ -19,24 +19,25 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
-                                <input type="text" name="email" class="form-control" placeholder="email">
-
+                                <input type="text" name="email" class="@error('email') is-invalid @enderror form-control" placeholder="email" required>
+                                @error('email')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
-                                <input type="password" name="password" class="form-control" placeholder="password">
+                                <input type="password" name="password" class="@error('password') is-invalid @enderror form-control" placeholder="password" required>
+
+                                @error('password')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="Login" class="btn bg-white text-dark login_btn">
                             </div>
                         </form>
-                    </div>
-                    <div class="card-footer">
-                        <div class="d-flex justify-content-center links">
-                            Don't have an account?<a href="#">Sign Up</a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -44,7 +45,9 @@
     @endguest
 
     @auth
-        <a href="{{ route('auth.logout') }}" type="button">Logout</a>
+        <script>
+            window.location.href = '{{ route('user.index') }}'
+        </script>
     @endauth
 @endsection
 
