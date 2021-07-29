@@ -31,6 +31,7 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['middleware' => 'auth:user'], function () {
 
     Route::group(['middleware' => 'admin'], function () {
+        Route::get('phplot', [UserController::class, 'phplot'])->name('phplot.index');
         Route::get('show/{id}', [UserController::class, 'show'])->name('user.show');
         Route::post('show/{id}', [UserController::class, 'update'])->name('user.update');
         Route::get('create', [UserController::class, 'create'])->name('user.add');

@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_admin',
+        'name', 'email', 'password', 'is_admin', 'height', 'weight'
     ];
 
     /**
@@ -37,7 +37,9 @@ class User extends Authenticatable
     public static $rules = [
         'password' => 'required|string|max:100',
         'email' => 'required|email:rfc,dns',
-        'is_admin' => 'required|int'
+        'is_admin' => 'required|int',
+        'height' => 'required|double|max:100',
+        'weight' => 'required|double|max:250'
     ];
 
     public function hasPermission()
